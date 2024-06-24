@@ -54,7 +54,7 @@ function App() {
 
   useEffect(() => {
     telegram.onEvent("mainButtonClicked", onSendData);
-  });
+  }, [onSendData]);
 
   return (
     <>
