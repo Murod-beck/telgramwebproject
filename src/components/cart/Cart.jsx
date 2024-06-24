@@ -3,7 +3,6 @@ import Btn from "../button/Btn";
 import { totalPrice } from "../utils/totalPrece";
 
 function Cart({ cartItems, onCheck }) {
-  console.log(cartItems);
   return (
     <div className="cart_container">
       <h3>
@@ -14,7 +13,7 @@ function Cart({ cartItems, onCheck }) {
         })}
       </h3>
       <Btn
-        title={`${cartItems.length === 0 ? "Buyutma barish" : "To'lov qilish"}`}
+        title={`${cartItems.length === 0 ? "Buyutma berish" : "To'lov qilish"}`}
         type={"check"}
         onClick={onCheck}
       />

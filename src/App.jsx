@@ -1,7 +1,7 @@
 import { getData } from "./components/db/db";
 import Cart from "./components/cart/Cart";
 import Card from "./components/card/Card";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
 const products = getData();
@@ -17,8 +17,6 @@ function App() {
 
   const onAddItems = (item) => {
     const exestItem = cartItems.find((c) => c.id == item.id);
-    console.log(exestItem);
-
     if (exestItem) {
       const newData = cartItems.map((c) =>
         c.id == item.id ? { ...exestItem, quantity: exestItem.quantity + 1 } : c
@@ -32,8 +30,6 @@ function App() {
 
   const onRemoveItems = (item) => {
     const exestItem = cartItems.find((c) => c.id == item.id);
-    console.log(exestItem);
-
     if (exestItem.quantity === 1) {
       const newData = cartItems.filter((c) => c.id !== exestItem.id);
       setCartItems(newData);
@@ -46,10 +42,20 @@ function App() {
       setCartItems(newData);
     }
   };
+
   const onCheck = () => {
     telegram.MainButton.text = "Sotib olish";
     telegram.MainButton.show();
   };
+
+  const onSendData = useCallback(() => {
+    telegram.sendData(JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    telegram.onEvent("mainButtonClicked", onSendData);
+  });
+
   return (
     <>
       <h1>Main Products</h1>
