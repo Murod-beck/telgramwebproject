@@ -49,6 +49,7 @@ function App() {
   };
 
   const onSendData = useCallback(() => {
+    telegram.sendData(JSON.stringify(cartItems));
     const queryID = telegram.initDataUnsave?.query_id;
     if (queryID) {
       fetch("http://localhost:8000/web-data", {
